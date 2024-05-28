@@ -3,13 +3,19 @@ import { Card, Avatar } from "antd"
 
 const { Meta } = Card;
 
-const MessageCard = ()=>{
+interface MessageCardProps {
+    avatar : string;
+    userName : string;
+    message : string;
+}
+
+const MessageCard = ({avatar, message, userName} : MessageCardProps)=>{
     return (
-        <Card>
+        <Card style={{ backgroundColor : "#F1F1F1", margin : 10}}>
             <Meta
-                avatar={<Avatar  src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                title="Card title"
-                description="This is the description"
+                avatar={<Avatar  src={avatar}/>}
+                title={userName}
+                description={message}
             />
         </Card>
     )

@@ -1,4 +1,4 @@
-import { Card, Typography, Flex } from "antd";
+import { Card, Typography, Flex, Button } from "antd";
 import Link from "next/link";
 
 const cardStyle: React.CSSProperties = {
@@ -24,10 +24,7 @@ export default function Home() {
             <Typography>
               Hello World
             </Typography>
-            <Flex justify="space-between" align="center" gap={20}>
-            <Link href="/users">Users</Link>
-            <Link href="/chat">Chat</Link>
-            </Flex>
+                <Link href="/users">Go</Link>
           </Flex>
         </Flex>
       </Card>
