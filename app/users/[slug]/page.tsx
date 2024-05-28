@@ -26,7 +26,7 @@ const UserDetails = ({ }: UserDetailsProps) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(`http://localhost:8080/user/get-user-by-userId/${params.slug}`, { cache: "no-cache" })
+        fetch(`https://chat-app-latest-j0p1.onrender.com/user/get-user-by-userId/${params.slug}`, { cache: "no-cache" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
