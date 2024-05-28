@@ -1,9 +1,10 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation'
-import { Avatar, Card, Skeleton, Modal } from 'antd';
+import { Avatar, Card, Skeleton, Modal, Breadcrumb } from 'antd';
 import UpdateUserForm from "../updateUserForm";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import Link from "next/link";
 
 const { Meta } = Card;
 
@@ -43,7 +44,10 @@ const UserDetails = ({ }: UserDetailsProps) => {
    
     return (
         <div>
-            <Card style={{ background: "#D8F5FA" }}>
+            <Breadcrumb
+                items={[{ title : <Link href="/users">Users</Link>},{title: 'User Details'}]}
+            />
+            <Card style={{ background: "#D8F5FA" , marginTop : "20px"}}>
                 <Skeleton loading={loading} avatar active>
                     <Meta
                         avatar={<Avatar src={data?.avatar} />}

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Breadcrumb } from 'antd';
 import UserList from './[slug]/userList';
+import Link from 'next/link';
 
 interface DataType {
     key: string
@@ -37,7 +38,7 @@ const User = () => {
     return (
         <div>
             <Breadcrumb
-                items={[{ title : "User" },{title: 'User List'}]}
+                items={[{ title : <Link href="/">Home</Link>},{title: 'User'}]}
             />
             <UserList data={data} loading={loading}/>
         </div>
