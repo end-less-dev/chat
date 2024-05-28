@@ -1,16 +1,12 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation'
-import { Avatar, Card, Skeleton, Modal, Breadcrumb } from 'antd';
+import { Avatar, Card, Skeleton, Breadcrumb } from 'antd';
 import UpdateUserForm from "../updateUserForm";
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import Link from "next/link";
 
 const { Meta } = Card;
-
-interface UserDetailsProps {
-
-}
+interface UserDetailsProps {}
 interface DataType {
     id?: null;
     userId: string;

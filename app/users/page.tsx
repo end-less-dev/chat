@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button, Flex, FloatButton } from 'antd';
 import UserList from './[slug]/userList';
 import Link from 'next/link';
+import { UserAddOutlined } from '@ant-design/icons';
 
 interface DataType {
     key: string
@@ -23,7 +24,7 @@ const User = () => {
 
     useEffect(() => {
         setLoading(true)
-        fetch("http://localhost:8080/user/get-all-users", { cache: "force-cache" })
+        fetch("https://chat-app-latest-j0p1.onrender.com/user/get-all-users", { cache: "force-cache" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
@@ -37,9 +38,12 @@ const User = () => {
     
     return (
         <div>
+            <Flex justify='space-between'>
             <Breadcrumb
                 items={[{ title : <Link href="/">Home</Link>},{title: 'User'}]}
             />
+            <Button type='primary'><Link href="/">Add User</Link></Button>
+            </Flex>
             <UserList data={data} loading={loading}/>
         </div>
     )
