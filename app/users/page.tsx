@@ -24,7 +24,7 @@ const User = () => {
 
     useEffect(() => {
         setLoading(true)
-        fetch("https://chat-app-latest-j0p1.onrender.com/user/get-all-users", { cache: "force-cache" })
+        fetch("https://chat-backend-o3ec.onrender.com/user/get-all-users", { cache: "force-cache" })
             .then(response => response.json())
             .then(data => {
                 setLoading(false)

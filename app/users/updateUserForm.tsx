@@ -24,7 +24,7 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
 const UpdateUserForm: React.FC<UpdateUserFormProps> = ({ data }) =>{
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         console.log('Success:', values);
-        const result = await fetch(`https://chat-app-latest-j0p1.onrender.com/user/update-user/${data.userId}`, {
+        const result = await fetch(`https://chat-backend-o3ec.onrender.com/user/update-user/${data.userId}`, {
             method : "PATCH",
             body : JSON.stringify(values)
         });
