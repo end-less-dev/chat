@@ -1,5 +1,5 @@
-import { Card, Typography, Flex, Button } from "antd";
-import Link from "next/link";
+import { Card, Typography, Flex } from "antd";
+import GetIn from "./lib/auth/auth";
 
 const cardStyle: React.CSSProperties = {
   width: 620,
@@ -21,10 +21,8 @@ export default function Home() {
             style={imgStyle}
           />
           <Flex vertical align="flex-end" justify="space-between" style={{ padding: 32 }}>
-            <Typography>
-              Hello World
-            </Typography>
-                <Link href="/users">Go</Link>
+            <Typography>Hello</Typography>
+            <GetIn/>
           </Flex>
         </Flex>
       </Card>
