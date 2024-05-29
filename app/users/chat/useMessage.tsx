@@ -1,10 +1,6 @@
 'use client';
 import { useEffect, useState } from "react"
-import { io } from "socket.io-client"
-
-const socket = io('http://localhost:8080', {
-  transports: ['websocket'],
-});
+import { socket } from "@san/app/lib/socket"
 
 interface UseMessageProps {
     userId: string;
@@ -13,58 +9,65 @@ interface UseMessageProps {
 interface MessagesType {
     messageId: string
     message: string
-    userId: string
+    userId: string;
+    createdAt : string
 }
 
 const useMessage = ({ userId }: UseMessageProps) => {
     const [message, setMessage] = useState<string>("");
     const [msgList, setMsgList] = useState<MessagesType[]>([]);
 
-    useEffect(() => {
-        socket.on('connect', () => {
-            console.log('Connected to WebSocket server');
-        });
+    const [isConnected, setIsConnected] = useState<boolean>(false);
+    const [transport, setTransport] = useState<string>("N/A");
 
-        socket.on('disconnect', () => {
-            console.log('Disconnected from WebSocket server');
-        });
+    useEffect(() => {
+        if (socket.connected) {
+          onConnect();
+        }
+    
+        function onConnect() {
+          setIsConnected(true);
+          setTransport(socket.io.engine.transport.name);
+    
+          socket.io.engine.on("upgrade", (transport) => {
+            setTransport(transport.name);
+          });
+          socket.emit('previous message', userId); // Request previous messages on connect
+        }
+        
+        function onDisconnect() {
+          setIsConnected(false);
+          setTransport("N/A");
+        }
+        
+        socket.on("connect", onConnect);
 
         socket.on('previous messages', (msgs) => {
-            setMsgList((prevMessages) => [...prevMessages, msgs]);
+            setMsgList((prevMessages) => [...prevMessages, ...msgs]);
         });
 
-        socket.on('chat message', (msg) => {
-            setMsgList((prevMessages) => [...prevMessages, msg]);
-        });
-
+        socket.on("disconnect", onDisconnect);
+    
         return () => {
-            socket.off('connect');
-            socket.off('disconnect');
-            socket.off('previous messages');
-            socket.off('chat message');
+          socket.off("connect", onConnect);
+          socket.off("disconnect", onDisconnect);
+          socket.off('previous messages');
         };
-    }, []);
-    console.log(msgList)
+      }, []);
+
     const sendMessage = async () => {
         if (!userId || !message) {
             return;
         }
-        const data = {
+        const messageData = {
             message,
-            userId
-        };
-        const result = await fetch("/", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        setMessage("");  // Clear message input after sending
-        return result;
+            userId : userId
+        }
+        socket.emit("chat message", messageData)
+        setMessage("");
     }
-
-    return { sendMessage, setMessage, msgList };
+    console.log(msgList)
+    return { sendMessage, setMessage, msgList, transport, isConnected };
 }
 
 export default useMessage;
