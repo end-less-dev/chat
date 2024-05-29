@@ -1,27 +1,27 @@
 'use client'
 import React from 'react';
-import { Avatar, List, Skeleton } from 'antd';
+import { Avatar, List, Skeleton, Space } from 'antd';
 import Link from 'next/link';
 
 interface DataType {
-    key: string;
-    userName: string;
-    email: string;
-    password: string;
-    avatar : string;
-    state : string;
-    country: string;
-    city: string;
-    userId : string;
-  }
-
-interface UserListProps {
-    data : DataType[];
-    loading : boolean
+  key: string;
+  userName: string;
+  email: string;
+  password: string;
+  avatar: string;
+  state: string;
+  country: string;
+  city: string;
+  userId: string;
 }
 
-const UserList: React.FC<UserListProps> = ({data, loading}) => {
-  
+interface UserListProps {
+  data: DataType[];
+  loading: boolean
+}
+
+const UserList: React.FC<UserListProps> = ({ data, loading }) => {
+
   return (
     <List
       className="demo-loadmore-list"
@@ -36,7 +36,16 @@ const UserList: React.FC<UserListProps> = ({data, loading}) => {
               title={item.userName}
               description={item.email}
             />
-            <Link href={`/users/${item.userId}`} >View</Link>
+            <Space>
+              <Link href={`/users/${item.userId}`} >View</Link>
+              <Link href={{
+                pathname: `/users/chat/${item.userId}`,
+                query: { userName: item.userName },
+              }}
+              >
+                Chat
+              </Link>
+            </Space>
           </Skeleton>
         </List.Item>
       )}

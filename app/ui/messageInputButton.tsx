@@ -2,12 +2,14 @@
 
 import { Input, Button, Flex } from "antd";
 import { SendOutlined } from '@ant-design/icons';
-
 import useMessage from "@san/app/users/chat/useMessage";
 
-const MessageInputButton = () => {
+interface MessageInputButtonProps {
+    userId : string
+}
+const MessageInputButton = ({ userId } : MessageInputButtonProps) => {
 
-    const {sendMessage, setMessage} = useMessage({userId : "hi"})
+    const {sendMessage, setMessage, message} = useMessage({userId : userId})
 
     return (
         <Flex justify="center" gap={10}>
@@ -15,6 +17,7 @@ const MessageInputButton = () => {
                 placeholder="Type your message..."
                 onChange={e => setMessage(e.target.value)}
                 style={{width : "100%"}}
+                value={message}
             />
             <Button onClick={sendMessage} type="primary" icon={<SendOutlined/>} shape="round">
                 Send
