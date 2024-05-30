@@ -18,6 +18,7 @@ const useMessage = ({ userId }: UseMessageProps) => {
     const [msgList, setMsgList] = useState<MessagesType[]>([]);
     const [isConnected, setIsConnected] = useState<boolean>(false);
     const [transport, setTransport] = useState<string>("N/A");
+    const [refresh, setRefresh] = useState<number>(0)
 
     const onConnect = useCallback(() => {
         setIsConnected(true);
@@ -36,7 +37,19 @@ const useMessage = ({ userId }: UseMessageProps) => {
     }, []);
 
     const handlePreviousMessages = (msgs: MessagesType[]) => {
-        setMsgList((prevMessages) => [...prevMessages, ...msgs]);
+        // setMsgList((prevMessages) => [...prevMessages, ...msgs]);
+        console.log(msgs)
+        setMsgList(msgs)
+    }
+
+    const handleMessages = (msg : any)=>{
+        console.log(msg, "handleMessage")
+        setMsgList((prevMsg : any)=>[...prevMsg, {
+            message : msg?.message,
+            userId : msg.userId,
+            createdAt : new Date(),
+            updatedAt : new Date()
+        }])
     }
 
     useEffect(() => {
@@ -47,16 +60,17 @@ const useMessage = ({ userId }: UseMessageProps) => {
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
         socket.on('previous messages', handlePreviousMessages);
+        socket.on('chat message', handleMessages)
 
         return () => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
             socket.off('previous messages', handlePreviousMessages);
         };
-    }, [onConnect, onDisconnect]);
+    }, [onConnect, onDisconnect, refresh]);
 
     const sendMessage = () => {
-        // e.preventDefault();
+
         if (!userId || !message) {
             return;
         }
@@ -64,9 +78,10 @@ const useMessage = ({ userId }: UseMessageProps) => {
             message,
             userId: userId
         };
-        setMsgList((prevMessages : any) => [...prevMessages, messageData]); // Update the message list immediately
+        // setMsgList((prevMessages : any) => [...prevMessages, messageData]);
         socket.emit("chat message", messageData);
         setMessage("");
+        setRefresh(Math.random())
     }
 
     return { sendMessage, setMessage, msgList, transport, isConnected, message };
