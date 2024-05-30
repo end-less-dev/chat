@@ -37,13 +37,11 @@ const useMessage = ({ userId }: UseMessageProps) => {
     }, []);
 
     const handlePreviousMessages = (msgs: MessagesType[]) => {
-        // setMsgList((prevMessages) => [...prevMessages, ...msgs]);
-        console.log(msgs)
         setMsgList(msgs)
     }
 
     const handleMessages = (msg : any)=>{
-        console.log(msg, "handleMessage")
+    
         setMsgList((prevMsg : any)=>[...prevMsg, {
             message : msg?.message,
             userId : msg.userId,
@@ -66,6 +64,7 @@ const useMessage = ({ userId }: UseMessageProps) => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
             socket.off('previous messages', handlePreviousMessages);
+            socket.on('chat message', handleMessages)
         };
     }, [onConnect, onDisconnect, refresh]);
 
@@ -78,7 +77,7 @@ const useMessage = ({ userId }: UseMessageProps) => {
             message,
             userId: userId
         };
-        // setMsgList((prevMessages : any) => [...prevMessages, messageData]);
+        
         socket.emit("chat message", messageData);
         setMessage("");
         setRefresh(Math.random())
