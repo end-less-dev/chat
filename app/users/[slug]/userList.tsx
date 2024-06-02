@@ -21,13 +21,16 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ data, loading }) => {
-
+  const loggedUser : any = localStorage.getItem('userDetails')
+  if (!loggedUser) {
+    return
+  }
   return (
     <List
       className="demo-loadmore-list"
       loading={loading}
       itemLayout="horizontal"
-      dataSource={data}
+      dataSource={data.filter((x)=>x.userId !== loggedUser?.userId as string)}
       renderItem={(item) => (
         <List.Item>
           <Skeleton avatar title={false} loading={loading} active>

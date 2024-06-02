@@ -64,7 +64,7 @@ const useMessage = ({ userId }: UseMessageProps) => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
             socket.off('previous messages', handlePreviousMessages);
-            socket.on('chat message', handleMessages)
+            socket.off('chat message', handleMessages)
         };
     }, [onConnect, onDisconnect, refresh]);
 

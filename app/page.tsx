@@ -21,7 +21,7 @@ export default function Home() {
             style={imgStyle}
           />
           <Flex vertical align="flex-end" justify="space-between" style={{ padding: 32 }}>
-            <Typography>Hello</Typography>
+            <h1>Welcome to clans</h1>
             <GetIn/>
           </Flex>
         </Flex>

@@ -11,12 +11,13 @@ interface MessageCardProps {
     userName: string;
     message: string;
     isConnected: boolean;
-    createdAt : string
+    createdAt : string;
+    loggedUser : boolean
 }
 
-const MessageCard = ({ avatar, message, userName, isConnected ,createdAt}: MessageCardProps) => {
+const MessageCard = ({ avatar, message, userName, isConnected ,createdAt, loggedUser}: MessageCardProps) => {
     return (
-        <Card style={{ backgroundColor: "#F1F1F1", margin: 10 }}>
+        <Card style={loggedUser ? { backgroundColor: "#F1F1F1", margin: 10 } : { backgroundColor: "blue", margin: 10 }}>
             <Meta
                 avatar={<Avatar shape="square" src={avatar} icon={<UserOutlined />} />}
                 title={userName}
