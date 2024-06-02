@@ -16,7 +16,8 @@ const Conversation = ()=>{
     const { msgList, isConnected } = useMessage({ userId: params.conversation as string})
 
     const scrollRef = useRef<HTMLHeadingElement>(null);
-
+    const loggedUser : any = localStorage.getItem('userDetails')
+    
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -38,6 +39,7 @@ const Conversation = ()=>{
                             userName="sansuks"
                             isConnected={isConnected}
                             createdAt={item.createdAt}
+                            loggedUser={item.userId === loggedUser?.userId}
                         />
                     ))}
 

@@ -20,7 +20,7 @@ interface DataType {
 const User = () => {
     const [data, setData] = useState<DataType[]>([]);
     const [loading, setLoading] = useState(false)
-
+    // console.log(loggedUser, "logged user")
     useEffect(() => {
         setLoading(true)
         fetch("https://chat-backend-o3ec.onrender.com/user/get-all-users")

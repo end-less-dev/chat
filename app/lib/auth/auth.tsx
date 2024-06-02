@@ -2,26 +2,33 @@
 import { useState } from "react"
 
 import { Space, Input, Button } from "antd";
-
+import useAuth from "./useAuth";
 
 const GetIn = ()=>{
     const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
     const [password, setPassword] = useState<string>("")
+    const [userName, setUserName] = useState<string>("")
+
+    const { loginApi, loading } = useAuth({data : {userName, password}})
     
-    const getIn = ()=>{
-        if (password && password.trim() === "sugi") {
-           window.location.href = "/users"
-        }
+    const login = async ()=>{
+      if (userName && password) {
+        loginApi()
+      }
     }
     return (
-        <Space direction="horizontal">
+        <Space direction="vertical">
+        <Input
+          placeholder="input user name"
+          onChange={(e)=> setUserName(e.target.value)}
+        />
         <Input.Password
           placeholder="input password"
           visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
           onChange={e =>setPassword(e.target.value)}
         />
-        <Button style={{ width: 80 }} onClick={getIn} type="primary">
-          Go
+        <Button loading={loading} style={{ width: 80 }} onClick={login} type="primary">
+          Login
         </Button>
       </Space>
     )
