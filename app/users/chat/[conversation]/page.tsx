@@ -18,7 +18,7 @@ const Conversation = () => {
   });
 
   const scrollRef = useRef<HTMLHeadingElement>(null);
-  const loggedUser: any = window.localStorage.getItem("userDetails");
+  //   const loggedUser: any = window.localStorage.getItem("userDetails");
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -61,7 +61,7 @@ const Conversation = () => {
               userName="sansuks"
               isConnected={isConnected}
               createdAt={item.createdAt}
-              loggedUser={item.userId === loggedUser?.userId}
+              loggedUser={true}
             />
           ))}
       </div>

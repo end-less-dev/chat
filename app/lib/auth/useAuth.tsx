@@ -28,10 +28,10 @@ const useAuth = ({ data }: UseAuthProps) => {
         const result = await response.json();
         console.log(result);
         if (result.isConfirmed && !loading) {
-          window.localStorage.setItem(
-            "userDetails",
-            JSON.stringify(result?.data)
-          );
+          //   window.localStorage.setItem(
+          //     "userDetails",
+          //     JSON.stringify(result?.data)
+          //   );
           router.push("/users");
         }
       } else {
