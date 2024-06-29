@@ -1,7 +1,7 @@
-'use client'
-import React from 'react';
-import { Avatar, List, Skeleton, Space } from 'antd';
-import Link from 'next/link';
+"use client";
+import React from "react";
+import { Avatar, List, Skeleton, Space } from "antd";
+import Link from "next/link";
 
 interface DataType {
   key: string;
@@ -17,20 +17,22 @@ interface DataType {
 
 interface UserListProps {
   data: DataType[];
-  loading: boolean
+  loading: boolean;
 }
 
 const UserList: React.FC<UserListProps> = ({ data, loading }) => {
-  const loggedUser : any = localStorage.getItem('userDetails')
+  const loggedUser: any = window.localStorage.getItem("userDetails");
   if (!loggedUser) {
-    return
+    return;
   }
   return (
     <List
       className="demo-loadmore-list"
       loading={loading}
       itemLayout="horizontal"
-      dataSource={data.filter((x)=>x.userId !== loggedUser?.userId as string)}
+      dataSource={data.filter(
+        (x) => x.userId !== (loggedUser?.userId as string)
+      )}
       renderItem={(item) => (
         <List.Item>
           <Skeleton avatar title={false} loading={loading} active>
@@ -40,11 +42,12 @@ const UserList: React.FC<UserListProps> = ({ data, loading }) => {
               description={item.email}
             />
             <Space>
-              <Link href={`/users/${item.userId}`} >View</Link>
-              <Link href={{
-                pathname: `/users/chat/${item.userId}`,
-                query: { userName: item.userName },
-              }}
+              <Link href={`/users/${item.userId}`}>View</Link>
+              <Link
+                href={{
+                  pathname: `/users/chat/${item.userId}`,
+                  query: { userName: item.userName },
+                }}
               >
                 Chat
               </Link>
